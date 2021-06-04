@@ -6,11 +6,10 @@ from flask import render_template
 
 @app.route('/')
 def index():
-    return "Leo will control his plant watering system from all over the world with this web app!"
+    message = 'Leo will control his plant watering system from all over the world with this web app!'
+    return render_template('dashboard.html', message=message)
 
 
-@app.route('/control-center.html')
-def control_center():
-    message = 'Hello World'
-    return render_template('control-center.html', message=message)
-
+@app.route('/cakes')
+def cakes():
+    return 'Yummy cakes!'
