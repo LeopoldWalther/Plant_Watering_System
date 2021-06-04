@@ -3,11 +3,11 @@ import datetime
 import json
 import plotly
 from flask import render_template
-from .hardware_control import  get_moisture_status
+from .hardware_control import get_moisture_status, pump_on
 
 
 def message_template(text=""):
-    current_time = datetime.datetime.now().strftime("%d.%m-%Y, %H:%M:%S")
+    current_time = datetime.datetime.now().strftime("%d.%m.%Y, %H:%M:%S")
     message = {
         'time': current_time,
         'text': text
@@ -38,6 +38,13 @@ def is_wet():
         text = "I'm a happy plant"
 
     message = message_template(text=text)
+    return render_template('dashboard.html', **message)
+
+
+@app.route("/water_once")
+def pump_water():
+    pump_on()
+    message = message_template(text="Watered Once")
     return render_template('dashboard.html', **message)
 
 
