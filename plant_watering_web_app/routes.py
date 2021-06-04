@@ -5,6 +5,7 @@ from flask import render_template
 
 
 @app.route('/')
+@app.route('/index')
 def index():
     message = 'Leo will control his plant watering system from all over the world with this web app!'
     return render_template('dashboard.html', message=message)
