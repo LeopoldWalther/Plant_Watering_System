@@ -3,6 +3,7 @@ import datetime
 import json
 import plotly
 from flask import render_template
+from .hardware_control import  get_moisture_status
 
 
 def message_template(text=""):
@@ -12,6 +13,7 @@ def message_template(text=""):
         'text': text
     }
     return message
+
 
 @app.route('/')
 @app.route('/index')
@@ -23,6 +25,20 @@ def index():
 @app.route('/cakes')
 def cakes():
     return 'Yummy cakes!'
+
+
+@app.route("/sensor")
+def is_wet():
+    status = get_moisture_status()
+    text = ""
+
+    if status == 1:
+        text = "Water me please!"
+    else:
+        text = "I'm a happy plant"
+
+    message = message_template(text=text)
+    return render_template('dashboard.html', **message)
 
 
 @app.route("/auto/water/<toggle>")
