@@ -1,9 +1,12 @@
-from plant_watering_web_app import app
 import datetime
-import json
-import plotly
+import psutil
+import os
 from flask import render_template
-from .hardware_control import get_moisture_status, pump_on
+
+from plant_watering_web_app import app
+from .hardware_control import PlantWateringSystem
+
+plant_watering_system = PlantWateringSystem()
 
 
 def message_template(text=""):
@@ -22,20 +25,13 @@ def index():
     return render_template('dashboard.html', **message)
 
 
-@app.route('/cakes')
-def cakes():
-    return 'Yummy cakes!'
-
-
 @app.route("/sensor")
-def is_wet():
-    status = get_moisture_status()
-    text = ""
-
-    if status == 1:
-        text = "Water me please!"
-    else:
+def check_humidity():
+    is_humid = plant_watering_system.get_moisture_status()
+    if is_humid:
         text = "I'm a happy plant"
+    else:
+        text = "Plant is dry, please water!"
 
     message = message_template(text=text)
     return render_template('dashboard.html', **message)
@@ -43,7 +39,7 @@ def is_wet():
 
 @app.route("/water_once")
 def pump_water():
-    pump_on()
+    plant_watering_system.pump_on()
     message = message_template(text="Watered Once")
     return render_template('dashboard.html', **message)
 
@@ -53,22 +49,22 @@ def auto_water(toggle):
     running = False
     if toggle == "ON":
         message = message_template(text="Auto Watering On")
+
         """
         for process in psutil.process_iter():
+            print(process)
             try:
                 if process.cmdline()[1] == 'auto_water.py':
-                    message = message_template(text ="Already running")
+                    message = message_template(text="Already running")
                     running = True
             except:
                 pass
-        if not running:
-            os.system("python3.4 auto_water.py&")
+        # if not running:
+            # os.system("python3.4 auto_water.py&")
         """
     else:
         message = message_template(text="Auto Watering Off")
-
         """
         os.system("pkill -f water.py")
         """
-
     return render_template('dashboard.html', **message)
