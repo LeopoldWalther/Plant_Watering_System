@@ -31,7 +31,9 @@ class PlantWateringSystem(object):
 
             f.write(log_entry)
 
-        return self.is_humid
+            print(self.is_humid)
+
+        return self.is_humid, GPIO.input(self.water_sensor_pin)
 
     def auto_water(self, delay=5):
         consecutive_water_count = 0
