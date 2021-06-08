@@ -131,3 +131,7 @@ dmypy.json
 
 # PyCharm
 .idea/
+
+
+.DS_Store
+log.csv

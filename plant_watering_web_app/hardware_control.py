@@ -18,20 +18,18 @@ class PlantWateringSystem(object):
 
     def get_moisture_status(self):
         """Checks if moisture sensor measures humidity"""
-
         with open('log.csv', 'a') as f:
             f.write("checked humidity, {};\n".format(datetime.datetime.now().strftime("%d.%m.%Y, %H:%M:%S")))
 
             GPIO.setup(self.water_sensor_pin, GPIO.IN)
             if GPIO.input(self.water_sensor_pin) == 1:
                 self.is_humid = True
+                log_entry = "plant measured humid, {};\n".format(datetime.datetime.now().strftime("%d.%m.%Y, %H:%M:%S"))
             else:
                 self.is_humid = False
+                log_entry = "plant measured dry, {};\n".format(datetime.datetime.now().strftime("%d.%m.%Y, %H:%M:%S"))
 
-            if self.is_humid:
-                f.write("plant measured humid, {};\n".format(datetime.datetime.now().strftime("%d.%m.%Y, %H:%M:%S")))
-            else:
-                f.write("plant measured dry, {};\n".format(datetime.datetime.now().strftime("%d.%m.%Y, %H:%M:%S")))
+            f.write(log_entry)
 
         return self.is_humid
 
@@ -49,6 +47,7 @@ class PlantWateringSystem(object):
                 else:
                     consecutive_water_count = 0
         except KeyboardInterrupt:  # If CTRL+C is pressed, exit cleanly:
+            print('Exception:')
             GPIO.cleanup()  # cleanup all GPI
 
     def pump_on(self, delay=1):
@@ -60,4 +59,3 @@ class PlantWateringSystem(object):
         GPIO.output(self.pump_pin, GPIO.LOW)
         time.sleep(delay)
         GPIO.output(self.pump_pin, GPIO.HIGH)
-
