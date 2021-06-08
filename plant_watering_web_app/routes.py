@@ -27,9 +27,7 @@ def index():
 
 @app.route("/sensor")
 def check_humidity():
-    is_humid, sensor = plant_watering_system.get_moisture_status()
-    print(is_humid)
-    print(sensor)
+    is_humid = plant_watering_system.get_moisture_status()
     if is_humid:
         text = "I'm a happy plant"
     else:
