@@ -50,6 +50,10 @@ def auto_water(toggle):
     if toggle == "ON":
         message = message_template(text="Auto Watering On")
 
+        # check if auto watering function activated
+        
+        plant_watering_system.auto_water()
+
         """
         for process in psutil.process_iter():
             print(process)
