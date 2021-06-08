@@ -33,11 +33,21 @@ class PlantWateringSystem(object):
 
     def auto_water(self, delay=5):
 
-        wet = self.get_moisture_status()
-        if not wet:
-            for i in range(5):
-                self.pump_on()
+        consecutive_water_count = 0
+        self.init_output(pump_pin)
+        print("Here we go! Press CTRL+C to exit")
+        try:
+            while 1 and consecutive_water_count < 10:
                 time.sleep(delay)
+                wet = self.get_moisture_status()
+                if not wet:
+                    if consecutive_water_count < 5:
+                        self.pump_on()
+                    consecutive_water_count += 1
+                else:
+                    consecutive_water_count = 0
+        except KeyboardInterrupt:  # If CTRL+C is pressed, exit cleanly:
+            GPIO.cleanup()  # cleanup all GPI
 
     def pump_on(self, delay=1):
         self.init_output(self.pump_pin)

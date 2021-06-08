@@ -47,28 +47,20 @@ def pump_water():
 @app.route("/auto/water/<toggle>")
 def auto_water(toggle):
     running = False
-
-    if toggle == "On":
+    if toggle == "ON":
         message = message_template(text="Auto Watering On")
-
-    while toggle == "ON":
-        plant_watering_system.auto_water()
-
-        """
         for process in psutil.process_iter():
-            print(process)
             try:
                 if process.cmdline()[1] == 'auto_water.py':
-                    message = message_template(text="Already running")
+                    message = message_template(text="Already Running!")
                     running = True
             except:
                 pass
-        # if not running:
-            # os.system("python3.4 auto_water.py&")
-        """
-    if toggle == "OFF":
+        if not running:
+            os.system("python3.4 auto_water.py&")
+
+    else:
         message = message_template(text="Auto Watering Off")
-    """
-    os.system("pkill -f water.py")
-    """
+        os.system("pkill -f water.py")
+
     return render_template('dashboard.html', **message)
