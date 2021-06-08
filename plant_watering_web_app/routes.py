@@ -47,11 +47,11 @@ def pump_water():
 @app.route("/auto/water/<toggle>")
 def auto_water(toggle):
     running = False
-    if toggle == "ON":
+
+    if toggle == "On":
         message = message_template(text="Auto Watering On")
 
-        # check if auto watering function activated
-        
+    while toggle == "ON":
         plant_watering_system.auto_water()
 
         """
@@ -66,9 +66,9 @@ def auto_water(toggle):
         # if not running:
             # os.system("python3.4 auto_water.py&")
         """
-    else:
+    if toggle == "OFF":
         message = message_template(text="Auto Watering Off")
-        """
-        os.system("pkill -f water.py")
-        """
+    """
+    os.system("pkill -f water.py")
+    """
     return render_template('dashboard.html', **message)

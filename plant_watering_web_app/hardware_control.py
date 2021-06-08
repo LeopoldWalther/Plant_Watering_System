@@ -32,20 +32,12 @@ class PlantWateringSystem(object):
         return self.is_humid
 
     def auto_water(self, delay=5):
-        consecutive_water_count = 0
-        try:
-            while consecutive_water_count < 10:
+
+        wet = self.get_moisture_status()
+        if not wet:
+            for i in range(5):
+                self.pump_on()
                 time.sleep(delay)
-                wet = self.get_moisture_status()
-                if not wet:
-                    if consecutive_water_count < 5:
-                        self.pump_on()
-                    consecutive_water_count += 1
-                else:
-                    consecutive_water_count = 0
-        except KeyboardInterrupt:  # If CTRL+C is pressed, exit cleanly:
-            print('Exception:')
-            GPIO.cleanup()  # cleanup all GPI
 
     def pump_on(self, delay=1):
         self.init_output(self.pump_pin)
