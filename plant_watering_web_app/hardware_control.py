@@ -32,7 +32,7 @@ class PlantWateringSystem(object):
         return self.is_humid
 
     def auto_water(self, delay=5):
-
+        """
         consecutive_water_count = 0
         self.init_output(pump_pin)
         print("Here we go! Press CTRL+C to exit")
@@ -58,3 +58,4 @@ class PlantWateringSystem(object):
         GPIO.output(self.pump_pin, GPIO.LOW)
         time.sleep(delay)
         GPIO.output(self.pump_pin, GPIO.HIGH)
+        """

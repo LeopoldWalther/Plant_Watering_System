@@ -46,6 +46,7 @@ def pump_water():
 
 @app.route("/auto/water/<toggle>")
 def auto_water(toggle):
+    """
     running = False
     if toggle == "ON":
         message = message_template(text="Auto Watering On")
@@ -62,5 +63,7 @@ def auto_water(toggle):
     else:
         message = message_template(text="Auto Watering Off")
         os.system("pkill -f hardware_control.py")
+    """
+    message = message_template(text="Auto Watering Function currently out of Service")
 
     return render_template('dashboard.html', **message)
