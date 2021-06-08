@@ -52,12 +52,13 @@ class PlantWateringSystem(object):
     """
 
     def pump_once(self, delay=1):
-        self.init_output(self.pump_pin)
+        GPIO.setup(self.pump_pin, GPIO.OUT)
+        GPIO.output(self.pump_pin, GPIO.LOW)
 
         with open('log.csv', 'a') as f:
             f.write("watered, {};\n".format(datetime.datetime.now().strftime("%d.%m.%Y, %H:%M:%S")))
 
-        GPIO.output(self.pump_pin, GPIO.LOW)
-        time.sleep(delay)
         GPIO.output(self.pump_pin, GPIO.HIGH)
+        time.sleep(delay)
+        GPIO.output(self.pump_pin, GPIO.LOW)
 
