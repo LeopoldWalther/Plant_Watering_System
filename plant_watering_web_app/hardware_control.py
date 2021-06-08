@@ -49,7 +49,9 @@ class PlantWateringSystem(object):
         except KeyboardInterrupt:  # If CTRL+C is pressed, exit cleanly:
             GPIO.cleanup()  # cleanup all GPI
 
-    def pump_on(self, delay=1):
+    """
+
+    def pump_once(self, delay=1):
         self.init_output(self.pump_pin)
 
         with open('log.csv', 'a') as f:
@@ -58,4 +60,4 @@ class PlantWateringSystem(object):
         GPIO.output(self.pump_pin, GPIO.LOW)
         time.sleep(delay)
         GPIO.output(self.pump_pin, GPIO.HIGH)
-        """
+

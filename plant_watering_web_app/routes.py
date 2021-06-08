@@ -39,7 +39,7 @@ def check_humidity():
 
 @app.route("/water_once")
 def pump_water():
-    plant_watering_system.pump_on()
+    plant_watering_system.pump_once()
     message = message_template(text="Watered Once")
     return render_template('dashboard.html', **message)
 
