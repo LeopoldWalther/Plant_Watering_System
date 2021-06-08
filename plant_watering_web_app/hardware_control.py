@@ -33,7 +33,6 @@ class PlantWateringSystem(object):
 
     def auto_water(self, delay=5):
         consecutive_water_count = 0
-        self.init_output(self.pump_pin)
         try:
             while consecutive_water_count < 10:
                 time.sleep(delay)
