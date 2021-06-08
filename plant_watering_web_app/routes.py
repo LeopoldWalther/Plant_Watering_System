@@ -57,10 +57,10 @@ def auto_water(toggle):
             except:
                 pass
         if not running:
-            os.system("python3.4 auto_water.py&")
+            os.system("python3 auto_water.py&")
 
     else:
         message = message_template(text="Auto Watering Off")
-        os.system("pkill -f water.py")
+        os.system("pkill -f hardware_control.py")
 
     return render_template('dashboard.html', **message)
