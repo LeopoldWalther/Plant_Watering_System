@@ -10,7 +10,7 @@ class PlantWateringSystem(object):
         self.high_runner_moisture_sensor_pin = 8
         self.low_runner_moisture_sensor_pin = 10
         self.high_runner_pump_pin = 7
-        self.low_runner_pump_pin = 17
+        self.low_runner_pump_pin = 29
         self.is_humid = False
 
     def get_moisture_status(self, plant_circuit):
