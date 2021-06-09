@@ -25,22 +25,23 @@ def index():
     return render_template('dashboard.html', **message)
 
 
-@app.route("/sensor")
-def check_humidity():
-    is_humid = plant_watering_system.get_moisture_status()
+@app.route("/sensor/<plants>")
+def check_humidity(plants):
+    is_humid = plant_watering_system.get_moisture_status(plants)
     if is_humid:
-        text = "I'm a happy plant"
+        text = "{} plants are wet!".format(plants)
     else:
-        text = "Plant is dry, please water!"
+        text = "{} plants are dry, please water!".format(plants)
 
     message = message_template(text=text)
     return render_template('dashboard.html', **message)
 
 
-@app.route("/water_once")
-def pump_water():
-    plant_watering_system.pump_once()
-    message = message_template(text="Watered Once")
+@app.route("/water/<plants>")
+def pump_water(plants):
+    plant_watering_system.pump_once(plants)
+    text = 'Watered {} plants'.format(plants)
+    message = message_template(text=text)
     return render_template('dashboard.html', **message)
 
 
