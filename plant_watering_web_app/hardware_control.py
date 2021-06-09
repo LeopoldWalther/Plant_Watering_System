@@ -13,16 +13,18 @@ class PlantWateringSystem(object):
         self.low_runner_pump_pin = 17
         self.is_humid = False
 
-    def get_moisture_status(self, moisture_sensor):
+    def get_moisture_status(self, plant_circuit):
         """Checks if moisture sensor measures humidity"""
-        if moisture_sensor == 'high_runner':
+        if plant_circuit == 'high_runners':
             moisture_sensor_pin = self.high_runner_moisture_sensor_pin
-        else:
+        elif plant_circuit == 'low_runners':
             moisture_sensor_pin = self.low_runner_moisture_sensor_pin
+        else:
+            moisture_sensor_pin = -1
 
         with open('log.csv', 'a') as f:
             f.write("checked {} humidity, {};\n".format(
-                moisture_sensor, datetime.datetime.now().strftime("%d.%m.%Y, %H:%M:%S")))
+                plant_circuit, datetime.datetime.now().strftime("%d.%m.%Y, %H:%M:%S")))
 
             GPIO.setup(moisture_sensor_pin, GPIO.IN)
             moisture_sensor_status = GPIO.input(moisture_sensor_pin)
@@ -30,11 +32,11 @@ class PlantWateringSystem(object):
             if moisture_sensor_status == 0:
                 self.is_humid = True
                 log_entry = "{} measured humid, {};\n".format(
-                    moisture_sensor, datetime.datetime.now().strftime("%d.%m.%Y, %H:%M:%S"))
+                    plant_circuit, datetime.datetime.now().strftime("%d.%m.%Y, %H:%M:%S"))
             else:
                 self.is_humid = False
                 log_entry = "{} measured dry, {};\n".format(
-                    moisture_sensor, datetime.datetime.now().strftime("%d.%m.%Y, %H:%M:%S"))
+                    plant_circuit, datetime.datetime.now().strftime("%d.%m.%Y, %H:%M:%S"))
 
             f.write(log_entry)
         return self.is_humid
@@ -59,18 +61,20 @@ class PlantWateringSystem(object):
 
     """
 
-    def pump_once(self, pump, delay=1):
+    def pump_once(self, plant_circuit, delay=1):
 
-        if pump == 'high_runner':
+        if plant_circuit == 'high_runners':
             pump_pin = self.high_runner_pump_pin
-        else:
+        elif plant_circuit == 'low_runners':
             pump_pin = self.low_runner_pump_pin
+        else:
+            pump_pin = -1
 
         GPIO.setup(pump_pin, GPIO.OUT)
         GPIO.output(pump_pin, GPIO.LOW)
 
         with open('log.csv', 'a') as f:
-            f.write("{} watered, {};\n".format(pump, datetime.datetime.now().strftime("%d.%m.%Y, %H:%M:%S")))
+            f.write("{} watered, {};\n".format(plant_circuit, datetime.datetime.now().strftime("%d.%m.%Y, %H:%M:%S")))
 
         GPIO.output(pump_pin, GPIO.HIGH)
         time.sleep(delay)
