@@ -23,19 +23,19 @@ class PlantWateringSystem(object):
             moisture_sensor_pin = -1
 
         with open('log.csv', 'a') as f:
-            f.write("checked {} humidity, {};\n".format(
+            f.write("checked {}s humidity, {};\n".format(
                 plant_circuit, datetime.datetime.now().strftime("%d.%m.%Y, %H:%M:%S")))
 
             GPIO.setup(moisture_sensor_pin, GPIO.IN)
-            moisture_sensor_status = 1  # GPIO.input(moisture_sensor_pin)
+            moisture_sensor_status = GPIO.input(moisture_sensor_pin)
 
             if moisture_sensor_status == 0:
                 self.is_humid = True
-                log_entry = "{} measured humid, {};\n".format(
+                log_entry = "{}s measured humid, {};\n".format(
                     plant_circuit, datetime.datetime.now().strftime("%d.%m.%Y, %H:%M:%S"))
             else:
                 self.is_humid = False
-                log_entry = "{} measured dry, {};\n".format(
+                log_entry = "{}s measured dry, {};\n".format(
                     plant_circuit, datetime.datetime.now().strftime("%d.%m.%Y, %H:%M:%S"))
 
             f.write(log_entry)

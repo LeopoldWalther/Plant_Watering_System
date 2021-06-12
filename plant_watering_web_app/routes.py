@@ -28,9 +28,9 @@ def check_humidity(plants):
     print(plants)
     is_humid = plant_watering_system.get_moisture_status(plants)
     if is_humid:
-        text = "{} plants are wet!".format(plants)
+        text = "{}s wet!".format(plants)
     else:
-        text = "{} plants are dry, please water!".format(plants)
+        text = "{}s dry, please water!".format(plants)
 
     message = message_template(text=text)
     return render_template('dashboard.html', **message)
@@ -65,6 +65,6 @@ def auto_water(toggle):
         message = message_template(text="Auto Watering Off")
         os.system("pkill -f hardware_control.py")
     """
-    message = message_template(text="Auto Watering Function currently out of Service")
+    message = message_template(text="Auto Watering Function \ncurrently out of Service")
 
     return render_template('dashboard.html', **message)
