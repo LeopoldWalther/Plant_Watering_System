@@ -27,7 +27,7 @@ class PlantWateringSystem(object):
                 plant_circuit, datetime.datetime.now().strftime("%d.%m.%Y, %H:%M:%S")))
 
             GPIO.setup(moisture_sensor_pin, GPIO.IN)
-            moisture_sensor_status = GPIO.input(moisture_sensor_pin)
+            moisture_sensor_status = 1  # GPIO.input(moisture_sensor_pin)
 
             if moisture_sensor_status == 0:
                 self.is_humid = True

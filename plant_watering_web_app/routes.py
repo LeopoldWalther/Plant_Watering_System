@@ -1,6 +1,4 @@
 import datetime
-import psutil
-import os
 from flask import render_template
 
 from plant_watering_web_app import app
