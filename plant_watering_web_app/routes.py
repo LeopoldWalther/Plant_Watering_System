@@ -33,9 +33,9 @@ def check_humidity(plants):
     print(plants)
     is_humid = plant_watering_system.get_moisture_status(plants)
     if is_humid:
-        text = "{}s wet!".format(plants)
+        text = "{}s wet".format(plants)
     else:
-        text = "{}s dry, please water!".format(plants)
+        text = "{}s dry".format(plants)
 
     message = message_template(text=text)
     return render_template('dashboard.html', **message)
