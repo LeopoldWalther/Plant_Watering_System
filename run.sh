@@ -1,5 +1,5 @@
 #!/bin/bash
-# declare STRING variable
-STRING="Hello World"
-#print variable on a screen
-echo $STRING
+
+set -e
+source /home/pi/Documents/Projects/PlantWateringSystem/Plant_Watering_System/env380/bin/activate
+python3 plant_watering_web_app.py
