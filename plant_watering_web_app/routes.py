@@ -1,4 +1,5 @@
 import datetime
+import pytz
 from flask import render_template
 
 from plant_watering_web_app import app
@@ -8,9 +9,13 @@ plant_watering_system = PlantWateringSystem()
 
 
 def message_template(text=""):
-    current_time = datetime.datetime.now().strftime("%d.%m.%Y, %H:%M:%S")
+    current_time = datetime.datetime.now()
+
+    local_timezone = pytz.timezone('Europe/Berlin')
+    current_time_berlin = local_timezone.localize(current_time)
+
     message = {
-        'time': current_time,
+        'time': current_time_berlin.strftime("%d.%m.%Y, %H:%M:%S"),
         'text': text
     }
     return message
