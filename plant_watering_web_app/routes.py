@@ -8,7 +8,7 @@ plant_watering_system = PlantWateringSystem()
 
 
 def message_template(text=""):
-    current_time = (datetime.now() + timedelta(hours=1)).strftime("%d.%m.%Y, %H:%M:%S")
+    current_time = (datetime.now() + timedelta(hours=0)).strftime("%d.%m.%Y, %H:%M:%S")
     message = {
         'time': current_time,
         'text': text
