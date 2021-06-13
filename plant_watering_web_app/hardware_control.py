@@ -68,7 +68,7 @@ class PlantWateringSystem(object):
             delay = 2
         elif plant_circuit == 'low_runners':
             pump_pin = self.low_runner_pump_pin
-            delay = 1
+            delay = 3
         else:
             pump_pin = -1
             delay = 0
