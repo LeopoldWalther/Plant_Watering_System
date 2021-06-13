@@ -1,12 +1,12 @@
 import datetime
 import time
-# import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 
 
 class PlantWateringSystem(object):
 
     def __init__(self):
-        # GPIO.setmode(GPIO.BOARD)  # Broadcom pin-numbering scheme
+        GPIO.setmode(GPIO.BOARD)  # Broadcom pin-numbering scheme
         self.high_runner_moisture_sensor_pin = 8
         self.low_runner_moisture_sensor_pin = 10
         self.high_runner_pump_pin = 7
@@ -26,8 +26,8 @@ class PlantWateringSystem(object):
             f.write("checked {}s humidity, {};\n".format(
                 plant_circuit, datetime.datetime.now().strftime("%d.%m.%Y, %H:%M:%S")))
 
-            # GPIO.setup(moisture_sensor_pin, GPIO.IN)
-            moisture_sensor_status = 1  # GPIO.input(moisture_sensor_pin)
+            GPIO.setup(moisture_sensor_pin, GPIO.IN)
+            moisture_sensor_status = GPIO.input(moisture_sensor_pin)
 
             if moisture_sensor_status == 0:
                 self.is_humid = True
@@ -71,13 +71,14 @@ class PlantWateringSystem(object):
             delay = 1
         else:
             pump_pin = -1
+            delay = 0
 
-        # GPIO.setup(pump_pin, GPIO.OUT)
-        # GPIO.output(pump_pin, GPIO.LOW)
+        GPIO.setup(pump_pin, GPIO.OUT)
+        GPIO.output(pump_pin, GPIO.LOW)
 
         with open('log.csv', 'a') as f:
             f.write("{} watered, {};\n".format(plant_circuit, datetime.datetime.now().strftime("%d.%m.%Y, %H:%M:%S")))
 
-        # GPIO.output(pump_pin, GPIO.HIGH)
+        GPIO.output(pump_pin, GPIO.HIGH)
         time.sleep(delay)
-        # GPIO.output(pump_pin, GPIO.LOW)
+        GPIO.output(pump_pin, GPIO.LOW)
