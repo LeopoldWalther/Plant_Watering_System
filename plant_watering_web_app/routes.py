@@ -30,7 +30,6 @@ def index():
 
 @app.route("/sensor/<plants>")
 def check_humidity(plants):
-    print(plants)
     is_humid = plant_watering_system.get_moisture_status(plants)
     if is_humid:
         text = "{}s wet".format(plants)
@@ -43,7 +42,6 @@ def check_humidity(plants):
 
 @app.route("/water/<plants>")
 def pump_water(plants):
-    print(plants)
     plant_watering_system.pump_once(plants)
     text = 'Watered {} plants'.format(plants)
     message = message_template(text=text)
